@@ -14,6 +14,8 @@ VCS_FLAGS= \
 	-Mupdate \
 	-debug_access+all \
 	-v2005 \
+	-sverilog \
+	-R \
 	-o $(DEST).bin \
 	ZFIFO_Sync.v ZFIFO_Sync_TB.v
 #	-f $(DEST).flist 

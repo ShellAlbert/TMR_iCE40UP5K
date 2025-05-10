@@ -1,0 +1,61 @@
+#Makefile for zad7988_controller
+#Compiles the design in 64-bits mode and creates a 64-bits executable for simulating in 64-bits mode.
+#By default, vcs overwrites the Makefile between compilations.  
+#Enables dumpling to FSDB/VPD.	
+# specifies the name of the executable file that is the product of compilation.
+# default file name is simv.
+#specifies a file that contains a lot of pathnames to source files and compile-time options.
+
+
+# -full64
+#   Compiles the design in 64 bit mode and creates a 64 bit executable
+#   for simulating in 64 bit mode.
+
+# +v2k
+#   Enables the use of new Verilog constructs in the 1364-2001 standard.
+
+# -R 
+#   Run the executable file immediately after VCS links together the
+#   executable file. You can add any runtime option to the vcs command line.
+
+# -sverilog
+#   Enables the use of the Verilog language extensions in the Accellera
+#   SystemVerilog specification.
+
+#  +vcs+fsdbon
+#    A compile-time substitute for $fsdbDumpvars option. The +vcs+fsdbon
+#    switch enables dumping for the entire design. If you do not add a
+#    corresponding -debug* switch, then -debug_access is automatically
+#    added.  Note that you must also set VERDI_HOME.
+
+
+DEST=run_me_before_verdi
+
+VCS_FLAGS= \
+	-full64 \
+	+v2k \
+	-R \
+	-Mupdate \
+	-v2005 \
+	-sverilog	\
+	-debug_access+all \
+	+vcs+fsdbon \
+	-fsdb+define+FSDB \
+	-o $(DEST).bin \
+	sync_fifo.v tb.v 
+#	-f $(DEST).flist 
+
+#Default rule.
+all: compile
+
+compile:
+	vcs ${VCS_FLAGS}
+	./$(DEST.bin) 
+
+clean:
+	rm -rvf $(DEST).bin	
+	rm -rvf csrc
+	rm -rvf $(DEST).bin.daidir
+	rm -rvf *.fsdb *.logr
+	rm -rvf verdiLog
+	rm -rvf novas.conf  novas_dump.log  ucli.key

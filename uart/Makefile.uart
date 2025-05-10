@@ -12,6 +12,7 @@ VCS_FLAGS= \
 	-full64 \
 	-Mupdate \
 	-debug_access+all \
+	-sverilog \
 	-o $(DEST).bin \
 	zuart_controller.v zuart_controller_tb.v
 #	-f $(DEST).flist 
